@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Pycharm setting
+.idea/
+
+# FFmpeg
+ffmpeg.zip
+ffmpeg/
