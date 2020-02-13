@@ -10,7 +10,8 @@ def checkFFmpeg() :
     if not isFFmpegDir():
         print("Info: Is not ffmpeg... It will be start to check ffmpeg.zip!")
     else :
-        return False
+        print("Info: FFmpeg is already set")
+        return True
 
     # Check if the ffmpeg zip file exists.
     if not isFFmpegZip():
@@ -22,6 +23,7 @@ def checkFFmpeg() :
     # Unzip ffmpeg zip file
     if not unzipFFmpeg():
         print("Info: Fail to unzip ffmpeg.zip... VideoPreviewer will be terminated")
+        return False
 
     print("Info: Successfully completed the ffmpeg settings")
     return True
