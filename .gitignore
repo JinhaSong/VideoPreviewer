@@ -134,3 +134,18 @@ dmypy.json
 # FFmpeg
 ffmpeg.zip
 ffmpeg/
+
+# test
+test
+
+# weight
+*.weights
+
+# image
+*.jpg
+*.png
+
+# dummy file
+*frames.txt
+*lock_file
+*.mp4
