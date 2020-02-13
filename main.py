@@ -1,10 +1,9 @@
 from utils.ffmpegChecker import *
 from app import MainWindow
 
-
-if __name__ == '__main__':
-    # Check ffmpeg
-    checkFFmpeg()
-
+def main() :
     # Show MainWindow
     MainWindow.startApp()
+
+if __name__ == '__main__':
+    main()
