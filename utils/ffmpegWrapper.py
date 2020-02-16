@@ -27,7 +27,7 @@ class FFmpegWrapper:
         print(self.output_dir)
         if not os.path.isdir(self.output_dir):
             os.makedirs(self.output_dir)
-        os.system("D:\\Packages\\ffmpeg-4.2.2-win64-static\\bin\\ffmpeg -skip_frame nokey -i {} -vsync 0 -frame_pts true {}\\%d.png"
+        os.system("D:\\Packages\\ffmpeg-4.2.2-win64-static\\bin\\ffmpeg -skip_frame nokey -i {} -vsync 0 -frame_pts true {}\\%d.jpg"
                   .format(self.video_path, self.output_dir))
         keyframes = os.listdir(self.output_dir)
         for i in range(len(keyframes)) :

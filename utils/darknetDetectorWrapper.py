@@ -12,9 +12,9 @@ class darknetDetectorWrapper:
 
     def __init__(self):
         self.mode = "test"
-        self.dataset = os.path.join(os.getcwd(), "cfg/coco.data")
-        self.cfg = os.path.join(os.getcwd(), "cfg/yolov3.cfg")
-        self.weight = os.path.join(os.getcwd(), "weights/yolov3.weights")
+        self.dataset = os.path.join(os.getcwd(), "cfg/nsfw.data")
+        self.cfg = os.path.join(os.getcwd(), "cfg/yolov3-nsfw.cfg")
+        self.weight = os.path.join(os.getcwd(), "weights/yolov3-nsfw_10000.weights")
         self.input_paths = os.path.join(os.getcwd(), "test.txt")
 
     def setOptions(self, mode="test ", dataset=dataset, cfg=cfg, weight=weight):
@@ -61,19 +61,32 @@ class darknetDetectorWrapper:
                     objects.append([label_prob, x, y, width, height])
                 results.append([file_name, objects])
             self.results = results
+            print("Info: Dection complete")
             self.drawBoundingBox()
+            print("Info: BBox complete")
 
     def drawBoundingBox(self):
-        for result in self.results:
+        for fnum, result in enumerate(self.results):
+            if fnum % 50 == 0 :
+                print("\r{} / {}".format(fnum, len(self.results)), end="")
             frame = cv2.imread(result[0], cv2.IMREAD_COLOR)
-            for obj_info in result[1]:
+
+            colors = [(0, 0, 255), (0, 255, 0)]
+            for idx, obj_info in enumerate(result[1]):
                 label_prop = obj_info[0]
                 x = obj_info[1]
                 y = obj_info[2]
                 width = obj_info[3]
                 height = obj_info[4]
-                cv2.rectangle(frame, (x, y), (x + width, y + height), (0, 0, 255), 2)
-                cv2.putText(frame, label_prop,(x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+                color = ""
+                if label_prop.split(": ")[0] == "woman" :
+                    color = colors[0]
+                else :
+                    color = colors[1]
+                cv2.rectangle(frame, (x, y), (x + width, y + height), color, 2)
+                cv2.putText(frame, label_prop,(x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
             cv2.imwrite(result[0], frame)
+        print()
         lock_file = open(os.path.join(self.output_path, "lock_file"), "w")
         lock_file.close()
+
